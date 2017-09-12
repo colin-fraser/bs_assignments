@@ -42,7 +42,7 @@ df <- df %>%
   mutate(MOBILITY = ifelse(runif(n()) < 0.03, 0, MOBILITY),
          INTERNET = ifelse(runif(n()) < 0.05, 0, INTERNET)) %>% 
   mutate(INDUSTRY = ifelse(runif(n()) < 0.0123, NA, INDUSTRY),
-         EMP = ifelse(runif(n()) < 0.0322, NA, EMP), 
+         EMP = ifelse(runif(n()) < 0.122, NA, EMP), 
          ANNUAL_SALES = ifelse(runif(n()) < 0.054, NA, ANNUAL_SALES))
 
 
