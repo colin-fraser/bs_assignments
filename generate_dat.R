@@ -43,7 +43,9 @@ df <- df %>%
          INTERNET = ifelse(runif(n()) < 0.05, 0, INTERNET)) %>% 
   mutate(INDUSTRY = ifelse(runif(n()) < 0.0123, NA, INDUSTRY),
          EMP = ifelse(runif(n()) < 0.122, NA, EMP), 
-         ANNUAL_SALES = ifelse(runif(n()) < 0.054, NA, ANNUAL_SALES))
+         ANNUAL_SALES = ifelse(runif(n()) < 0.054, NA, ANNUAL_SALES)) %>% 
+  mutate(CUSTOMER_ID = sample(120000:130000, 10000, replace = F))
 
 
-write_csv(select(df, INDUSTRY, EMP, ANNUAL_SALES, PROVINCE, MOBILITY, INTERNET), 'customer_info.csv')
+write_csv(select(df, CUSTOMER_ID, INDUSTRY, EMP, ANNUAL_SALES, 
+                 PROVINCE, MOBILITY, INTERNET), 'customer_info.csv')
