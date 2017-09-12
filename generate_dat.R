@@ -40,4 +40,10 @@ df <- df %>%
                            ifelse(0.08 * ANNUAL_SALES < 6000, rnorm(n(), 0.08, 0.02)*ANNUAL_SALES, 6000*rnorm(n(), (SIZE_QTILE+2.5)/5, 0.5)))) %>% 
   mutate(INTERNET = ifelse(INTERNET < 390, rnorm(n(), 390, 60), INTERNET)) %>% 
   mutate(MOBILITY = ifelse(runif(n()) < 0.03, 0, MOBILITY),
-         INTERNET = ifelse(runif(n()) < 0.05, 0, MOBILITY))
+         INTERNET = ifelse(runif(n()) < 0.05, 0, INTERNET)) %>% 
+  mutate(INDUSTRY = ifelse(runif(n()) < 0.0123, NA, INDUSTRY),
+         EMP = ifelse(runif(n()) < 0.0322, NA, EMP), 
+         ANNUAL_SALES = ifelse(runif(n()) < 0.054, NA, ANNUAL_SALES))
+
+
+write_csv(select(df, INDUSTRY, EMP, ANNUAL_SALES, PROVINCE, MOBILITY, INTERNET), 'customer_info.csv')
