@@ -11,15 +11,15 @@ industries <- c("Agriculture",
 mu <- data_frame(INDUSTRY = industries, 
                  MU = c(log(50), log(100), log(20), log(25), log(30), log(80)),
                  MOBILITY_BETA = c(0.05, 30, 10, 0.3, 5, 10),
-                 MOBILITY_ALPHA = c(2000, 5000, 1500, 2500, 2800, 4500))
+                 MOBILITY_ALPHA = log(c(2000, 5000, 1500, 2500, 2800, 4500)))
 
 percents <- c(7, 23, 32, 18, 10, 17) / sum(c(7, 23, 32, 18, 10, 17))
 
 
-df <- data_frame(INDUSTRY = sample(industries, size = 10000, prob = percents, replace = T))
+df <- data_frame(INDUSTRY = sample(industries, size = 10000, prob = percents, replace = T)) %>% 
+  left_join(mu)
 
 df <- df %>% 
-  left_join(mu) %>% 
   mutate(EMP = round(exp(rnorm(n(), MU)))) %>% 
   mutate(EMP = ifelse(EMP < 10, 10, EMP)) %>% 
   mutate(ANNUAL_SALES = round(rnorm(n(), 50000*EMP, 10000*EMP))) %>% 
@@ -31,7 +31,8 @@ df <- df %>%
     .$PROVINCE == "AB" & .$INDUSTRY == "Food Services" ~ 0.6,
     TRUE ~ 1
   )) %>% 
-  mutate(MOBILITY = rnorm(n(), MOBILITY_BETA, MOBILITY_BETA/4)*EMP + MOBILITY_ALPHA) %>% 
+  mutate(MOBILITY = rnorm(n(), MOBILITY_BETA, MOBILITY_BETA/4)*EMP + 
+           exp(rnorm(n(), MOBILITY_ALPHA, MOBILITY_ALPHA/4))) %>% 
   mutate(ANNUAL_SALES = AB_MULTIPLIER * ANNUAL_SALES, MOBILITY = AB_MULTIPLIER * MOBILITY) %>% 
   mutate(SIZE_QTILE = ntile(ANNUAL_SALES, 5)) %>% 
   left_join(data_frame(SIZE_QTILE = 1:5, PROB = c(0.8, 0.5, 0.3, 0.2, 0.005))) %>% 
