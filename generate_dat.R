@@ -32,7 +32,7 @@ df <- df %>%
     TRUE ~ 1
   )) %>% 
   mutate(MOBILITY = rnorm(n(), MOBILITY_BETA, MOBILITY_BETA/4)*EMP + 
-           exp(rnorm(n(), MOBILITY_ALPHA, MOBILITY_ALPHA/4))) %>% 
+           exp(rnorm(n(), MOBILITY_ALPHA, MOBILITY_ALPHA/10))) %>% 
   mutate(ANNUAL_SALES = AB_MULTIPLIER * ANNUAL_SALES, MOBILITY = AB_MULTIPLIER * MOBILITY) %>% 
   mutate(SIZE_QTILE = ntile(ANNUAL_SALES, 5)) %>% 
   left_join(data_frame(SIZE_QTILE = 1:5, PROB = c(0.8, 0.5, 0.3, 0.2, 0.005))) %>% 
