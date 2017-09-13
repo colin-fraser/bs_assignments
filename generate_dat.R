@@ -45,9 +45,6 @@ df <- df %>%
   mutate(INDUSTRY = ifelse(runif(n()) < 0.0123, NA, INDUSTRY),
          EMP = ifelse(runif(n()) < 0.122, NA, EMP), 
          ANNUAL_SALES = ifelse(runif(n()) < 0.054, NA, ANNUAL_SALES)) %>% 
-  mutate(INDUSTRY = ifelse(runif(n()) < 0.0123, NA, 9999999999),
-         EMP = ifelse(runif(n()) < 0.122, NA, 9999999999), 
-         ANNUAL_SALES = ifelse(runif(n()) < 0.054, NA, 9999999999)) %>% 
   mutate(CUSTOMER_ID = sample(120000:130000, 10000, replace = F))
 
 
